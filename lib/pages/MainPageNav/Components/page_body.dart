@@ -79,7 +79,7 @@ class PageBodyState extends State<PageBody> {
                                                     child: const Drawer()),
                                               const HomeView(),
                                               const LibraryView(),
-                                              const Text("fuck you"),
+                                              const Text("hi :)"),
                                               const RadioPage()
                                             ]))))))
       ]);

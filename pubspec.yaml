@@ -1,0 +1,38 @@
+name: musicnya
+description: A purrfect alternative to Apple Music.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+
+  provider: ^6.0.5
+  sliding_sheet: ^0.5.2
+  cached_network_image: ^3.2.3
+  http: ^0.13.5
+  flutter_svg: ^1.1.6
+  sticky_headers: ^0.3.0+2
+  scroll_to_index: ^3.0.1
+  get_it: any
+  palette_generator: ^0.3.3+2
+  flutter_secure_storage: ^7.0.1
+
+dependency_overrides:
+  win32: ^4.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.1
+  
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - lib/assets/html/index.html
+    - lib/assets/icons/

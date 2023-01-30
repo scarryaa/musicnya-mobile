@@ -1,0 +1,1 @@
+enum LocalFilter { appleMusic, local }

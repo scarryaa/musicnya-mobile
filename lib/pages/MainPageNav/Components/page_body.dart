@@ -69,14 +69,14 @@ class PageBodyState extends State<PageBody> {
                                     builder: (context, child) => TabBarView(
                                             controller: model.tabController,
                                             children: [
-                                              if (!ResponsiveLayout.isMobile(
-                                                  context))
-                                                ConstrainedBox(
-                                                    constraints:
-                                                        const BoxConstraints(
-                                                            minWidth: 150,
-                                                            maxWidth: 250),
-                                                    child: const Drawer()),
+                                              // if (!ResponsiveLayout.isMobile(
+                                              //     context))
+                                              //   ConstrainedBox(
+                                              //       constraints:
+                                              //           const BoxConstraints(
+                                              //               minWidth: 150,
+                                              //               maxWidth: 250),
+                                              //       child: const Drawer()),
                                               const HomeView(),
                                               const LibraryView(),
                                               const Text("hi :)"),

@@ -2,54 +2,59 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:musicnya/assets/constants.dart';
+import 'package:musicnya/env/env.dart';
 import 'package:musicnya/services/locator_service.dart';
 import 'package:musicnya/services/navigation_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'jwt_gen.dart';
+import 'package:apple_music/apple_music.dart';
 
+///Handles Apple Music authentication & user sign-in
 class AuthenticationService {
-  bool userAuthenticated = false;
   bool userRefused = false;
-  final _channel = const MethodChannel('auth');
   final storage = const FlutterSecureStorage();
-  String? userToken = '';
+  AppleMusic appleMusic = AppleMusic();
 
-  /// Prompts user to login with Apple Music, if it is their first launch of the app and they are not already signed in.
-  Future<bool> checkIfUserNeedsAuthentication() async {
-    WidgetsFlutterBinding.ensureInitialized();
-
-    try {
-      storage.write(key: "devToken", value: JwtGen.generate256SignedJWT());
-
-      userToken = await storage.read(key: 'userToken');
-      if (userToken != null || userToken != '') return true;
-      if (kDebugMode) log("Read token successfully");
-      return false;
-    } catch (_) {
-      if (kDebugMode) {
-        ('Could not read token from local storage. ${Future.error(_)}');
-      }
-      return (firstLaunch && !userRefused) ? true : false;
-    }
+  /// Checks if the user token exists, returns true if so and false if not.
+  Future<bool> checkUserAuthentication() async {
+    bool? userAuthenticated =
+        await appleMusic.checkUserAuthentication(devToken: Env.devToken);
+    return userAuthenticated ?? false;
   }
 
-  Future<void> startAuthentication() async {
-    var token = JwtGen.generate256SignedJWT();
-    final result =
-        await _channel.invokeMethod('authenticate', {"token": token});
-    if (result == 0) {
-      //user canceled activity
+  /// Starts the user authentication process.
+  Future<void> startUserAuthentication() async {
+    String? userToken = '';
+
+    userToken =
+        await appleMusic.startUserAuthentication(devToken: Env.devToken);
+
+    if (userToken == null) {
       userRefused = true;
       Navigator.of(
               serviceLocator<NavigationService>().navigatorKey.currentContext!)
           .pushReplacementNamed("/");
+    } else if (userToken == '') {
+      //TODO show "error occured" popup, retry? add navigation options
     } else {
-      storage.write(key: "userToken", value: result);
+      // User token was written to storage, so we can continue
       Navigator.of(
               serviceLocator<NavigationService>().navigatorKey.currentContext!)
           .pushReplacementNamed("/");
     }
+  }
+
+  Future<String?> readUserToken() async {
+    String? userToken;
+
+    try {
+      userToken = await storage.read(key: "userToken");
+    } catch (e) {
+      if (kDebugMode) log("User token was unable to be read. Error: $e");
+    }
+
+    if (userToken == null) {
+      if (kDebugMode) log("User token not found in local storage.");
+    }
+    return userToken;
   }
 }

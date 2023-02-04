@@ -295,16 +295,16 @@ class AppbarNavigationState extends State<AppbarNavigation>
                                                       indicatorWeight: 2,
                                                       labelColor: Colors.black,
                                                       tabs: [
-                                                        if (!ResponsiveLayout
-                                                            .isMobile(context))
-                                                          Container(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              height:
-                                                                  topAppBarHeightCompact,
-                                                              child: const Text(
-                                                                  "Drawer")),
+                                                        // if (!ResponsiveLayout
+                                                        //     .isMobile(context))
+                                                        //   Container(
+                                                        //       alignment:
+                                                        //           Alignment
+                                                        //               .center,
+                                                        //       height:
+                                                        //           topAppBarHeightCompact,
+                                                        //       child: const Text(
+                                                        //           "Drawer")),
                                                         Container(
                                                             alignment: Alignment
                                                                 .center,

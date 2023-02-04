@@ -48,6 +48,8 @@ class AppleMusicApi {
   }
 
   Future<List<dynamic>> getRecentlyPlayedContent() async {
+    String? userToken = await GetIt.I<AuthenticationService>().readUserToken();
+
     try {
       final response = await client.get(
           Uri.https(
@@ -57,7 +59,7 @@ class AppleMusicApi {
           headers: {
             HttpHeaders.authorizationHeader:
                 'Bearer ${JwtGen.generate256SignedJWT()}',
-            'Music-User-Token': '${GetIt.I<AuthenticationService>().userToken}',
+            'Music-User-Token': userToken ?? '',
           });
 
       if (response.statusCode == 200) {
@@ -87,7 +89,7 @@ class AppleMusicApi {
         return results;
       } else {
         throw Exception(
-            'Failed to load search results ${response.statusCode}, ${json.decode(response.body)}');
+            'Failed to load recently played content ${response.statusCode}, ${json.decode(response.body)}');
       }
     } catch (_) {
       return Future.error(_);
@@ -181,7 +183,8 @@ class AppleMusicApi {
           headers: {
             HttpHeaders.authorizationHeader:
                 'Bearer ${JwtGen.generate256SignedJWT()}',
-            'Music-User-Token': '${GetIt.I<AuthenticationService>().userToken}',
+            'Music-User-Token':
+                '${await GetIt.I<AuthenticationService>().readUserToken()}',
           });
 
       if (response.statusCode == 200) {
@@ -197,7 +200,7 @@ class AppleMusicApi {
         return results;
       } else {
         throw Exception(
-            'Failed to load search results ${response.statusCode}, ${json.decode(response.body)}');
+            'Failed to load recent playlists ${response.statusCode}, ${json.decode(response.body)}');
       }
     } catch (_) {
       return Future.error(_);
@@ -214,7 +217,8 @@ class AppleMusicApi {
           headers: {
             HttpHeaders.authorizationHeader:
                 'Bearer ${JwtGen.generate256SignedJWT()}',
-            'Music-User-Token': '${GetIt.I<AuthenticationService>().userToken}',
+            'Music-User-Token':
+                '${await GetIt.I<AuthenticationService>().readUserToken()}',
           });
 
       if (response.statusCode == 200) {
@@ -238,7 +242,7 @@ class AppleMusicApi {
         return results;
       } else {
         throw Exception(
-            'Failed to load search results ${response.statusCode}, ${json.decode(response.body)}');
+            'Failed to load user heavy rotation ${response.statusCode}, ${json.decode(response.body)}');
       }
     } catch (_) {
       return Future.error(_);

@@ -1,0 +1,28 @@
+name: apple_music_ios
+description: A plugin for utilizing Apple Music on iOS.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+flutter:
+  plugin:
+    implements: apple_music
+    platforms:
+      ios:
+        pluginClass: AppleMusicPlugin
+        dartPluginClass: AppleMusiciOS
+        fileName: apple_music_ios.dart
+
+dependencies:
+  apple_music_platform_interface:
+    path: ../apple_music_platform_interface
+  flutter:
+    sdk: flutter
+  flutter_secure_storage: ^7.0.1
+  envied: ^0.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

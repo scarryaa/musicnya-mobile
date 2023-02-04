@@ -81,8 +81,8 @@ class HomeViewModel extends ChangeNotifier {
   //     MusicPlayer().getRecentlyPlayedAlbums();
   // Future<List<Song>> futureRecentlyPlayedSongs =
   //     MusicPlayer().getRecentlyPlayedSongs();
-  Future<List<Playlist>> futurePlaylists =
-      MusicPlayer().getUserRecentPlaylists();
+  // Future<List<Playlist>> futurePlaylists =
+  //     MusicPlayer().getUserRecentPlaylists();
 
   late Future<List<CachedNetworkImage>> futureRecentlyPlayedContentImages;
   // late Future<List<CachedNetworkImage>> futureUserHeavyRotationImages;

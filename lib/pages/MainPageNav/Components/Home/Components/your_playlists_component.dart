@@ -30,7 +30,7 @@ class YourPlaylistsComponentState extends State<YourPlaylistsComponent> {
     return Consumer<HomeViewModel>(
         builder: (context, model, child) => FutureBuilder(
             future: Future.wait(
-                [model.futurePlaylists, model.futurePlaylistsImages]),
+                [/*model.futurePlaylists, */ model.futurePlaylistsImages]),
             builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return Column(children: [

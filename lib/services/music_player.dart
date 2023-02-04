@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:apple_music/apple_music.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -8,11 +9,13 @@ import 'package:musicnya/models/album.dart';
 import 'package:musicnya/models/playlist.dart';
 import 'package:musicnya/services/apple_music_api.dart';
 
+import '../env/env.dart';
 import '../models/song.dart';
 import '../models/station.dart';
 
 class MusicPlayer extends ChangeNotifier {
   static final MusicPlayer _instance = MusicPlayer._internal();
+  AppleMusic appleMusic = AppleMusic();
   final locator = GetIt.instance;
   int currentSongIndex = 0;
   List<Song> songQueue = [];
@@ -328,9 +331,6 @@ class MusicPlayer extends ChangeNotifier {
     getSongQueue().then((value) => songQueue = value);
   }
 
-  final _authChannel = const MethodChannel('auth');
-  final _musicChannel = const MethodChannel('music');
-
   //platform-agnostic methods
 
   Future<List<Station>> getStations() async {
@@ -508,24 +508,21 @@ class MusicPlayer extends ChangeNotifier {
   }
   //platform-specific methods
 
-  void passJWT() async {
-    await _authChannel.invokeMethod('authenticate');
-  }
-
   void initPlayer() async {
-    await _musicChannel.invokeMethod('mediaPlayer');
+    appleMusic.initializeMusicPlayer(devToken: Env.devToken);
   }
 
   void playSong() async {
-    await _musicChannel.invokeMethod("play");
+    // appleMusic.
+    // await _musicChannel.invokeMethod("play");
   }
 
-  Future<List<Song>> songs() async {
-    final List<dynamic>? songs =
-        await _musicChannel.invokeMethod<List<dynamic>>('getSongs');
-    return songs?.cast<Map<String, Object?>>().map<Song>(Song.from).toList() ??
-        <Song>[];
-  }
+  // Future<List<Song>> songs() async {
+  //   final List<dynamic>? songs =
+  //       await _musicChannel.invokeMethod<List<dynamic>>('getSongs');
+  //   return songs?.cast<Map<String, Object?>>().map<Song>(Song.from).toList() ??
+  //       <Song>[];
+  // }
 
   // Future<void> play(Song song, double volume) async {
   //   try {

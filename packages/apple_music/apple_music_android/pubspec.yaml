@@ -1,0 +1,29 @@
+name: apple_music_android
+description: A plugin for utilizing Apple Music on Android.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+  
+flutter:
+  plugin:
+    implements: apple_music
+    platforms:
+      android:
+        package: nyan.inc.applemusic
+        pluginClass: AppleMusicPlugin
+        dartPluginClass: AppleMusicAndroid
+        
+dependencies:
+  apple_music_platform_interface:
+    path: ../apple_music_platform_interface
+  flutter:
+    sdk: flutter
+  flutter_secure_storage: ^7.0.1
+  envied: ^0.3.0
+  flutter_plugin_android_lifecycle: ^2.0.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

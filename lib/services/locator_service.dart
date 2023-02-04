@@ -10,4 +10,6 @@ void init() {
   serviceLocator.registerLazySingleton(() => NavigationService());
   serviceLocator.registerLazySingleton(() => MusicPlayer());
   serviceLocator.registerLazySingleton(() => AuthenticationService());
+
+  GetIt.I<MusicPlayer>().initPlayer();
 }

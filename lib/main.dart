@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
 import 'package:musicnya/pages/AuthenticationPromptView/authentication_prompt_view.dart';
 import 'package:musicnya/pages/LibraryView/library_view.dart';
 import 'package:musicnya/pages/MainPageNav/main_page_nav.dart';
@@ -14,23 +13,22 @@ import 'package:provider/provider.dart';
 import 'package:musicnya/assets/constants.dart';
 import 'behaviors/scroll_behavior_by_platform.dart';
 
-late bool userNeedsAuth;
+bool userAuthenticated = false;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   init();
-  userNeedsAuth = await serviceLocator<AuthenticationService>()
-      .checkIfUserNeedsAuthentication();
+
+  //checking for user authentication
+  userAuthenticated =
+      await serviceLocator<AuthenticationService>().checkUserAuthentication();
+
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
-
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark, // dark text for status bar
       statusBarColor: Colors.transparent));
-
-  GetIt.I<MusicPlayer>().initPlayer();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => MusicPlayer()),
@@ -41,7 +39,6 @@ void main() async {
 class App extends StatelessWidget {
   const App({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
@@ -53,7 +50,7 @@ class App extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'musicnya',
             themeMode: ThemeMode.light,
-            initialRoute: userNeedsAuth ? '/authentication_prompt' : '/',
+            initialRoute: userAuthenticated ? '/' : '/authentication_prompt',
             navigatorKey: serviceLocator<NavigationService>().navigatorKey,
             theme: ThemeData.light().copyWith(
                 appBarTheme: const AppBarTheme(
@@ -107,10 +104,5 @@ class App extends StatelessWidget {
                 reverseTransitionDuration: const Duration(milliseconds: 1),
               );
             }));
-  }
-
-  void checkForAuth() async {
-    await serviceLocator<AuthenticationService>()
-        .checkIfUserNeedsAuthentication();
   }
 }

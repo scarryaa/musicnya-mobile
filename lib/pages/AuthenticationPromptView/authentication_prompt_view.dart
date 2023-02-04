@@ -59,9 +59,9 @@ class AuthenticationPromptViewState extends State<AuthenticationPromptView> {
                               foregroundColor:
                                   MaterialStateProperty.resolveWith(
                                       (states) => secondaryColor)),
-                          onPressed: () {
-                            GetIt.I<AuthenticationService>()
-                                .startAuthentication();
+                          onPressed: () async {
+                            await GetIt.I<AuthenticationService>()
+                                .startUserAuthentication();
                           },
                           child: const Text("Continue to Apple Music")),
                       OutlinedButton(

@@ -19,6 +19,10 @@ dependencies:
   get_it: any
   palette_generator: ^0.3.3+2
   flutter_secure_storage: ^7.0.1
+  envied: ^0.3.0
+  desktop_webview_window: ^0.1.6
+  apple_music:
+    path: packages/apple_music/apple_music
 
 dependency_overrides:
   win32: ^4.1.0
@@ -28,11 +32,12 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.1
-  
+  build_runner: ^2.4.0
+  envied_generator: ^0.3.0
 
 flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/html/index.html
     - lib/assets/icons/
+    - lib/assets/js/

@@ -23,20 +23,15 @@ class HomeViewState extends State<HomeView> {
     return Consumer<HomeViewModel>(builder: (context, model, child) {
       final binding = WidgetsFlutterBinding.ensureInitialized();
 
-      // Preload all assets to prevent flash when they are loaded.
-      binding.deferFirstFrame();
-      binding.addPostFrameCallback((_) async {
-        // Run any sync or awaited async function you want to wait for before showing your UI
-        await Future.wait([
-          model.futureUserRecentlyPlayedContent,
-          model.futureRecentlyPlayedContentImages,
-          // model.futurePlaylists,
-          // model.futurePlaylistsImages,
-          // model.futureUserHeavyRotation,
-          // model.futureUserHeavyRotationImages
-        ]);
-        binding.allowFirstFrame();
-      });
+      // Run any sync or awaited async function you want to wait for before showing your UI
+      Future.wait([
+        model.futureUserRecentlyPlayedContent,
+        model.futureRecentlyPlayedContentImages,
+        // model.futurePlaylists,
+        // model.futurePlaylistsImages,
+        // model.futureUserHeavyRotation,
+        // model.futureUserHeavyRotationImages
+      ]);
 
       return Column(
         children: const [

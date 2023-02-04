@@ -1,0 +1,31 @@
+name: apple_music
+description: A plugin for utilizing Apple Music on Android, iOS, and Web.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        default_package: apple_music_android
+      ios:
+        default_package: apple_music_android
+      web:
+        default_package: apple_music_web
+
+dependencies:
+  apple_music_android:
+    path: ../apple_music_android
+  apple_music_ios:
+    path: ../apple_music_ios
+  apple_music_platform_interface:
+    path: ../apple_music_platform_interface
+  apple_music_web:
+    path: ../apple_music_web
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

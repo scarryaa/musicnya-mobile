@@ -1,3 +1,5 @@
+import 'package:musicnya/env/env.dart';
+
 class JwtGen {
   static const String musickitKey = '''<>''';
 
@@ -7,7 +9,7 @@ class JwtGen {
   static const int sixMonthsInSeconds = 15776000;
 
   static String generate256SignedJWT() {
-    return r'<>';
+    return Env.devToken;
 
     // code below is currently not working, will have to fix
 
